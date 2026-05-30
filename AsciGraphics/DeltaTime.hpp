@@ -42,12 +42,16 @@ inline void DeltaTime::ShowFPS()
 	FPS += 1 / deltaTime;
 	if (fps_counter >= 100)
 	{
-		//std::cout << FPS / float(100) << '\n';
 		AVG_FPS = FPS / float(100);
 		FPS = 0;
 		fps_counter = 0;
+		static float last_printed = 0;
+		if (AVG_FPS != last_printed)
+		{
+			last_printed = AVG_FPS;
+			std::cout << "\033[2K\r" << AVG_FPS << " FPS" << std::flush;
+		}
 	}
-	std::cout << AVG_FPS << '\n';
 }
 inline void DeltaTime::SetTargetFPS(float FPS_TARGET)
 {
