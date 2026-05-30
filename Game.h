@@ -3,6 +3,7 @@
 #include <chrono>
 #include <mutex>
 #include <shared_mutex>
+#include "Input.hpp"
 #include "ChunkManager.hpp"
 #include "Player.hpp"
 
@@ -32,7 +33,12 @@ class Game
 public:
 	Game(int render_distance) :render_distance(render_distance), chunk_manager(render_distance)
 	{
+		Input::init();
 		player.position = vec3(32, get_height_map(32, 32) + 2, 32);
+	}
+	~Game()
+	{
+		Input::shutdown();
 	}
 
 	void generate_chunks()
@@ -77,9 +83,10 @@ public:
 		game_time.HandleTime();
 		while (is_game_running)
 		{
+			Input::update();
 			if (day_time > 209.5) day_time = 0;
 			day_time += game_time.GetFrameTime();
-			if (GetAsyncKeyState('G') & 0x8000)
+			if (Input::is_down(Key::G))
 				day_time += 20 * game_time.GetFrameTime();
 			game_time.HandleTime();
 			global_brightness = (sun_position.y + 50) / 100 + 0.1;
