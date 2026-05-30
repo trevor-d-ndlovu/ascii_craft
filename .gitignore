@@ -1,0 +1,9 @@
+build/
+*.exe
+*.o
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
