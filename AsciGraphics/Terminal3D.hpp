@@ -13,7 +13,7 @@ public:
 	static void change_background(char character);
 	static void add_texture(const char tex_code, unsigned char* tex_data, const int width, const int height) { Get().add_texture_i(tex_code, tex_data, width, height); }
 	static void add_texture_ppm(const char tex_code, std::string file_name) { Get().add_texture_ppm_i(tex_code, file_name); }
-	static ASCI_Texture& get_texture(char tex_code) { Get().get_texture_i(tex_code); }
+	static ASCI_Texture& get_texture(char tex_code) { return Get().get_texture_i(tex_code); }
 	static void init(int ScreenWidth, int ScreenHeight, char background_character);
 	static void init(int ScreenWidth, int ScreenHeight, float aspect_ratio, char background_character);
 	static void clear_buffer();
@@ -75,7 +75,7 @@ inline void Terminal3D::init_i(int ScreenWidth, int ScreenHeight, char backgroun
 	for (int i = 0; i <= ScreenHeight; i++)
 		back_buffer[(ScreenWidth * 2) + i * (ScreenWidth * 2+1)] = '\n';
 	//back_buffer[SCREEN_CHAR_COUNT - 2] = '\n';
-	back_buffer[SCREEN_CHAR_COUNT - 1] = NULL;
+	back_buffer[SCREEN_CHAR_COUNT - 1] = '\0';
 	std::memcpy(front_buffer, back_buffer, SCREEN_CHAR_COUNT);
 	//z buffer setup
 	PIXEL_COUNT = ScreenWidth * ScreenHeight;
@@ -110,7 +110,7 @@ inline void Terminal3D::change_background(char character)
 	for (int i = 0; i <= Get().screen_h; i++)
 		Get().back_buffer[(Get().screen_w * 2) + i * (Get().screen_w * 2 + 1)] = '\n';
 	Get().back_buffer[Get().SCREEN_CHAR_COUNT - 2] = '\n';
-	Get().back_buffer[Get().SCREEN_CHAR_COUNT - 1] = NULL;
+	Get().back_buffer[Get().SCREEN_CHAR_COUNT - 1] = '\0';
 }
 
 

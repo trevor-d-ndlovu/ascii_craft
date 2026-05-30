@@ -4,6 +4,7 @@
 #include "CubeMesh.h"
 #include <unordered_map>
 #include <array>
+#include <climits>
 
 const int CHUNK_LENGTH = 16;
 const int CHUNK_SIZE = CHUNK_LENGTH * CHUNK_LENGTH * CHUNK_LENGTH;
@@ -218,13 +219,11 @@ inline void ChunkManager::render(Camera3D camera, float Brightness, vec3 sun_pos
 		Brightness * ((2 + sun_dir.dot(vec3(0, 0, 1))) / 2),
 		Brightness * ((2 + sun_dir.dot(vec3(-1, 0,0))) / 2),
 		Brightness * ((2 + sun_dir.dot(vec3(0,-1, 0))) / 2),
-		(Brightness + 0.2) * ((2 + sun_dir.dot(vec3(0, 1, 0))) / 2)
+		(Brightness + 0.2f) * ((2 + sun_dir.dot(vec3(0, 1, 0))) / 2)
 	};
 
 	for (auto& [key, chunk] : chunks)
 	{
-		if (chunk.chunk_x == INT_MAX) continue;
-
 		vec3 chunk_pos = vec3(chunk.chunk_x * CHUNK_LENGTH, chunk.chunk_y * CHUNK_LENGTH, chunk.chunk_z * CHUNK_LENGTH);
 		chunk_pos = camera.RotXAxis() * camera.RotYAxis() * (chunk_pos - camera.position);
 

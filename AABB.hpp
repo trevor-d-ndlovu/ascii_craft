@@ -1,4 +1,5 @@
 #pragma once
+#include <cfloat>
 #include "AsciGraphics/Math/vec.h"
 
 struct AABB
@@ -72,4 +73,5 @@ inline vec3 AABB::Collide(const AABB& box2, int& face_hit) //returns position b1
 		return vec3(p.x, box2.p.y + box2.h + epsilon, p.z);
 		break;
 	}
+	return p;
 }
